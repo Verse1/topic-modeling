@@ -7,23 +7,32 @@ import copy
 def extract_title_abstract(pdf_path):
     with pdfplumber.open(pdf_path) as pdf:
         page = pdf.pages[0]
+
         text = page.extract_text(x_tolerance=1, y_tolerance=5)
+
+        # print(page.chars)
         table={}
         for x,i in enumerate(page.chars):
             # print(i["text"])
+            # if i["text"]==" " or i["text"]=="\n":
+            #     print("new line")
             if i["size"] not in table:
                 table[i["size"]]=""
-            if i["text"]==" ":
-                table[page.chars[x-1]["size"]]+=" "
+            if x>0 and i["x0"]-page.chars[x-1]["x1"]>=1:
+                table[i["size"]]+=" "
+            if x>0 and page.chars[x-1]["y1"]-i["y1"]>5:
+                table[i["size"]]+=" "
             table[i["size"]]+=i["text"]
-        print(text,"\n")
+
+
+        # print(text,"\n") 
         tmp=copy.deepcopy(table)
 
         for i in tmp:
             if len(tmp[i])<30:
                 del table[i]
 
-        print(table[max(table.keys())],"\n")
+        print(table[max(table.keys())].strip().replace("  "," "),"\n")
         abstract_match = re.search(r"Abstract\s+(.*?[.!?])\s*\n[c,©]", text, re.DOTALL)
         if not abstract_match:
             abstract_match = re.search(r'(?i)abstract\b\.?:?]?\s+((?:.|\n)+?)(?=\n\d+\.|Key|Introduction|[0,1]?\Z)', text, re.DOTALL)
@@ -31,12 +40,12 @@ def extract_title_abstract(pdf_path):
         if abstract_match:
             abstract = abstract_match.group(1).strip()
 
-    title = "".join(text.split("\n")[2:4])
+    title = " ".join(text.split("\n")[2:4])
     if not abstract_match:
         abstract = "No abstract found"
     # abstract = text.split('\n')
     # print("Title: ",title,"Abstract: ",abstract)
-    print(title, "\n")
+    # print(title, "\n")
 
     # return title, abstract
 
@@ -45,10 +54,10 @@ pdf_dir = "./data"
 pdf_files = [f for f in os.listdir(pdf_dir) if f.endswith(".pdf")]
 title_abstract_list = []
 
-testDir="./data/doc1.pdf"
-print(testDir, os.path.join(testDir, testDir) )
-extract_title_abstract(testDir)
-
+# from i in range(1, 33):
+#      testDir="./data/doc" +str(i) + ".pdf"
+#     print(testDir, os.path.join(testDir, testDir) )
+#     extract_title_abstract(testDir)
 
 # if title_abstract:
 #     title_abstract_list.append(title_abstract)
