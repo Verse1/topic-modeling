@@ -32,7 +32,7 @@ def extract_title_abstract(pdf_path):
             if len(tmp[i])<30:
                 del table[i]
 
-        print(table[max(table.keys())].strip().replace("  "," "),"\n")
+        title=table[max(table.keys())].strip().replace("  "," ")
         abstract_match = re.search(r"Abstract\s+(.*?[.!?])\s*\n[c,©]", text, re.DOTALL)
         if not abstract_match:
             abstract_match = re.search(r'(?i)abstract\b\.?:?]?\s+((?:.|\n)+?)(?=\n\d+\.|Key|Introduction|[0,1]?\Z)', text, re.DOTALL)
@@ -40,24 +40,23 @@ def extract_title_abstract(pdf_path):
         if abstract_match:
             abstract = abstract_match.group(1).strip()
 
-    title = " ".join(text.split("\n")[2:4])
     if not abstract_match:
         abstract = "No abstract found"
     # abstract = text.split('\n')
     # print("Title: ",title,"Abstract: ",abstract)
     # print(title, "\n")
 
-    # return title, abstract
+    return title, abstract
 
 
 pdf_dir = "./data"
 pdf_files = [f for f in os.listdir(pdf_dir) if f.endswith(".pdf")]
 title_abstract_list = []
 
-# from i in range(1, 33):
-#      testDir="./data/doc" +str(i) + ".pdf"
-#     print(testDir, os.path.join(testDir, testDir) )
-#     extract_title_abstract(testDir)
+
+testDir="./data/doc16.pdf"
+
+print(extract_title_abstract(testDir)[0])
 
 # if title_abstract:
 #     title_abstract_list.append(title_abstract)
@@ -67,7 +66,9 @@ title_abstract_list = []
 #     pdf_path = os.path.join(pdf_dir, pdf_file)
 #     print(pdf_file)
 #     title_abstract = extract_title_abstract(pdf_path)
+#     print("Title",title_abstract[0],"\nAbstract",title_abstract[1])
 
 
-    # if title_abstract:
-    #     title_abstract_list.append(title_abstract)
+#     if title_abstract:
+#         title_abstract_list.append(title_abstract)
+# print(title_abstract_list)

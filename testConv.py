@@ -7,12 +7,10 @@ import copy
 def extract_title_abstract(pdf_path):
     with pdfplumber.open(pdf_path) as pdf:
         page = pdf.pages[0]
-        text = page.extract_text_lines(strip=False)
+        text = page.extract_text_lines()
 
-        print(text)
-
-        # for elem in text:
-        #     print (elem['text'])
+        for elem in text:
+            print (elem['text'])
 
     # return title, abstract
 
