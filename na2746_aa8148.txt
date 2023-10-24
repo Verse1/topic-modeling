@@ -1,0 +1,14 @@
+We saw that most documents have a similarity of above 0.8. When looking at the documents manually and comparing them, we can see that the documents are very similar especially in their titles.
+we can also see that the documents are very similar in their content. This is why we get a high similarity score. 
+
+
+
+1. The curse of dimensionality when we are analyzing and organizing data in high-dimensional spaces that do not occur in a lot of low-dimensional settings such as 
+the three-dimensional physical space of our everyday. As the dimensionality increases, the volume of the space increases so fast that the available data become sparse. This sparsity is problematic for any method that requires statistical significance. 
+In order to obtain a statistically right and reliable result, the amount of data needed to support the result often grows exponentially with the dimensionality.
+
+2. We used word embeddings and sentence and text embeddings. We used the Word2Vec embedding and the OpenAI embedding. In word embeddings we use the position of a word within the vector space is learned from text and is based on the words that surround the word when it is used.
+In sentence embeddings we extend this idea by using larger pieces of text such as sentences, paragraphs, or entire documents.
+
+3. After using both embedding techniques we can see that with the OpenAI embedding we get a better accuracy score. This is because the OpenAI embedding is trained on a much larger dataset and is more accurate. 
+The Word2Vec embedding is trained on a smaller dataset and is less accurate. This is why we get a better accuracy score with the OpenAI embedding.
